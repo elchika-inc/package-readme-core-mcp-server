@@ -1,57 +1,61 @@
 # Package README Core MCP Server
 
-Package README Core MCP Server は、複数のパッケージマネージャー対応MCPサーバーを統合する仲介型MCP（Model Context Protocol）サーバーです。ユーザーが問い合わせるパッケージマネージャーが不明な場合に、適切なツールを自動的に判定・呼び出しします。
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 
-## ⚠️ 重要: 必要な依存関係
+Package README Core MCP Server is an orchestrator MCP (Model Context Protocol) server that integrates multiple package manager-specific MCP servers. When users inquire about packages without specifying the package manager, it automatically determines and calls the appropriate tools.
 
-このサーバーを動作させるためには、**以下の個別パッケージマネージャー対応MCPサーバーが必要**です：
+## ⚠️ Important: Required Dependencies
 
-### 必須MCPサーバー
+To run this server, you need **the following individual package manager-specific MCP servers**:
 
-以下のMCPサーバーを事前にセットアップし、ビルドしておく必要があります：
+### Required MCP Servers
 
-- **npm-package-readme-core-mcp-server** - Node.js/npm パッケージ対応
-- **composer-package-readme-core-mcp-server** - PHP/Composer パッケージ対応  
-- **pip-package-readme-core-mcp-server** - Python/pip パッケージ対応
-- **cargo-package-readme-core-mcp-server** - Rust/Cargo パッケージ対応
-- **maven-package-readme-core-mcp-server** - Java/Maven パッケージ対応
-- **nuget-package-readme-core-mcp-server** - .NET/NuGet パッケージ対応
-- **gem-package-readme-core-mcp-server** - Ruby/RubyGems パッケージ対応
-- **cocoapods-package-readme-core-mcp-server** - iOS/macOS/CocoaPods パッケージ対応
-- **conan-package-readme-core-mcp-server** - C/C++/Conan パッケージ対応
-- **cpan-package-readme-core-mcp-server** - Perl/CPAN パッケージ対応
-- **cran-package-readme-core-mcp-server** - R/CRAN パッケージ対応
-- **docker-hub-readme-mcp-server** - Docker Hub パッケージ対応
-- **helm-package-readme-core-mcp-server** - Kubernetes/Helm パッケージ対応
-- **swift-package-readme-core-mcp-server** - Swift Package Manager 対応
-- **vcpkg-package-readme-core-mcp-server** - C/C++/vcpkg パッケージ対応
+The following MCP servers must be set up and built beforehand:
 
-### セットアップ手順
+- **npm-package-readme-mcp-server** - Node.js/npm package support
+- **composer-package-readme-mcp-server** - PHP/Composer package support  
+- **pip-package-readme-mcp-server** - Python/pip package support
+- **cargo-package-readme-mcp-server** - Rust/Cargo package support
+- **maven-package-readme-mcp-server** - Java/Maven package support
+- **nuget-package-readme-mcp-server** - .NET/NuGet package support
+- **gem-package-readme-mcp-server** - Ruby/RubyGems package support
+- **cocoapods-package-readme-mcp-server** - iOS/macOS/CocoaPods package support
+- **conan-package-readme-mcp-server** - C/C++/Conan package support
+- **cpan-package-readme-mcp-server** - Perl/CPAN package support
+- **cran-package-readme-mcp-server** - R/CRAN package support
+- **docker-hub-readme-mcp-server** - Docker Hub package support
+- **helm-package-readme-mcp-server** - Kubernetes/Helm package support
+- **swift-package-readme-mcp-server** - Swift Package Manager support
+- **vcpkg-package-readme-mcp-server** - C/C++/vcpkg package support
 
-1. **各MCPサーバーのビルド**
+### Setup Instructions
+
+1. **Build each MCP server**
    ```bash
-   # 例: npm用MCPサーバー
-   cd ../npm-package-readme-core-mcp-server
+   # Example: npm MCP server
+   cd ../npm-package-readme-mcp-server
    npm install
    npm run build
    
-   # 他のパッケージマネージャーについても同様に実行
+   # Repeat for other package managers
    ```
 
-2. **設定ファイルの確認**
+2. **Verify configuration files**
    
-   `config/mcp-servers.json` で各MCPサーバーのパスが正しく設定されていることを確認してください。
+   Ensure that the paths for each MCP server are correctly set in `config/mcp-servers.json`.
 
-## 概要
+## Overview
 
-このサーバーは以下の機能を提供します：
+This server provides the following features:
 
-- **自動パッケージマネージャー判定**: パッケージ名やコンテキストヒントから最適なパッケージマネージャーを判定
-- **統一インターフェース**: 複数のパッケージマネージャーに対して統一されたAPIを提供
-- **並列実行**: 複数のパッケージマネージャーを並列で実行し、最適な結果を返却
-- **フォールバック機能**: 一つのパッケージマネージャーが失敗した場合の代替手段を提供
+- **Automatic Package Manager Detection**: Determines the optimal package manager from package names or context hints
+- **Unified Interface**: Provides a unified API for multiple package managers
+- **Parallel Execution**: Executes multiple package managers in parallel and returns optimal results
+- **Fallback Mechanism**: Provides alternative options when one package manager fails
 
-## サポートパッケージマネージャー
+## Supported Package Managers
 
 - npm (Node.js)
 - Composer (PHP)
@@ -69,11 +73,11 @@ Package README Core MCP Server は、複数のパッケージマネージャー�
 - Swift Package Manager (Swift)
 - vcpkg (C/C++)
 
-## 提供ツール
+## Available Tools
 
 ### 1. smart_package_search
 
-パッケージマネージャーを自動判定してパッケージを検索します。
+Automatically detects package manager and searches for packages.
 
 ```json
 {
@@ -86,7 +90,7 @@ Package README Core MCP Server は、複数のパッケージマネージャー�
 
 ### 2. smart_package_readme
 
-パッケージマネージャーを自動判定してREADMEを取得します。
+Automatically detects package manager and retrieves README.
 
 ```json
 {
@@ -99,7 +103,7 @@ Package README Core MCP Server は、複数のパッケージマネージャー�
 
 ### 3. smart_package_info
 
-パッケージマネージャーを自動判定してパッケージ情報を取得します。
+Automatically detects package manager and retrieves package information.
 
 ```json
 {
@@ -111,72 +115,72 @@ Package README Core MCP Server は、複数のパッケージマネージャー�
 
 ### 4. list_supported_managers
 
-サポートしているパッケージマネージャーの一覧と接続状況を取得します。
+Retrieves a list of supported package managers and their connection status.
 
 ```json
 {}
 ```
 
-## インストールと設定
+## Installation and Configuration
 
-### 1. 前提条件
+### 1. Prerequisites
 
-**必須**: 上記の各パッケージマネージャー対応MCPサーバーがビルド済みであることを確認してください。
+**Required**: Ensure that each package manager-specific MCP server listed above is built and ready.
 
-### 2. 依存関係のインストール
+### 2. Install dependencies
 
 ```bash
 cd package-readme-core-mcp-server
 npm install
 ```
 
-### 3. ビルド
+### 3. Build
 
 ```bash
 npm run build
 ```
 
-### 4. 設定ファイルの調整
+### 4. Adjust configuration files
 
-必要に応じて以下の設定ファイルを調整してください：
+Modify the following configuration files as needed:
 
-- `config/package-managers.json`: パッケージマネージャーの定義
-- `config/mcp-servers.json`: 外部MCPサーバーの接続設定
+- `config/package-managers.json`: Package manager definitions
+- `config/mcp-servers.json`: External MCP server connection settings
 
-**重要**: `config/mcp-servers.json` 内のパスが、実際にビルドした各MCPサーバーの場所と一致していることを確認してください。
+**Important**: Ensure that the paths in `config/mcp-servers.json` match the actual locations of each built MCP server.
 
-### 5. 実行
+### 5. Run
 
 ```bash
 npm start
 ```
 
-## 設定
+## Configuration
 
-### 環境変数
+### Environment Variables
 
 ```bash
-# 基本設定
+# Basic configuration
 NODE_ENV=production
 LOG_LEVEL=info
 
-# 判定エンジン設定
+# Detection engine settings
 DETECTION_TIMEOUT=1000
 HIGH_CONFIDENCE_THRESHOLD=0.8
 MEDIUM_CONFIDENCE_THRESHOLD=0.6
 
-# MCP Client設定
+# MCP Client settings
 MCP_TOOL_TIMEOUT=5000
 MCP_CONNECTION_TIMEOUT=3000
 MAX_CONCURRENT_CONNECTIONS=10
 
-# キャッシュ設定
+# Cache settings
 CACHE_TTL_DETECTION=3600
 CACHE_TTL_RESPONSES=1800
 CACHE_MAX_SIZE=100
 ```
 
-### パッケージマネージャー設定例
+### Package Manager Configuration Example
 
 ```json
 {
@@ -196,7 +200,7 @@ CACHE_MAX_SIZE=100
 }
 ```
 
-### MCPサーバー設定例
+### MCP Server Configuration Example
 
 ```json
 {
@@ -204,7 +208,7 @@ CACHE_MAX_SIZE=100
     "npm": {
       "server_id": "npm-package-mcp",
       "command": "node",
-      "args": ["../npm-package-readme-core-mcp-server/dist/index.js"],
+      "args": ["../npm-package-readme-mcp-server/dist/index.js"],
       "env": {},
       "tools": ["get_package_readme", "get_package_info", "search_packages"],
       "health_check_interval": 30000
@@ -213,12 +217,12 @@ CACHE_MAX_SIZE=100
 }
 ```
 
-## アーキテクチャ
+## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────────┐    ┌─────────────────┐
 │   MCP Client    │───▶│ Package README Core │───▶│   npm-mcp      │
-│   (Claude等)    │    │    MCP Server       │    │    Server      │
+│   (Claude etc.) │    │    MCP Server       │    │    Server      │
 └─────────────────┘    └─────────────────────┘    └─────────────────┘
                                 │                   ┌─────────────────┐
                                 ├──────────────────▶│ composer-mcp    │
@@ -235,119 +239,119 @@ CACHE_MAX_SIZE=100
                        └─────────────────┘
 ```
 
-## 判定アルゴリズム
+## Detection Algorithm
 
-### 1. パッケージ名パターン判定
+### 1. Package Name Pattern Detection
 
-各パッケージマネージャーの命名規則に基づいてパッケージ名を解析します。
+Analyzes package names based on naming conventions of each package manager.
 
-### 2. コンテキストヒント解析
+### 2. Context Hint Analysis
 
-- ファイル拡張子の解析
-- キーワードの検出
-- フレームワークパッケージの特定
+- File extension analysis
+- Keyword detection
+- Framework package identification
 
-### 3. 信頼度スコア計算
+### 3. Confidence Score Calculation
 
 ```typescript
 weights: {
-  exact_package_name_match: 0.4,      // 正確なパッケージ名一致
-  package_name_pattern: 0.3,          // パッケージ名パターン一致
-  context_hints: 0.2,                 // コンテキストヒント
-  user_preference: 0.1                // ユーザー設定
+  exact_package_name_match: 0.4,      // Exact package name match
+  package_name_pattern: 0.3,          // Package name pattern match
+  context_hints: 0.2,                 // Context hints
+  user_preference: 0.1                // User preferences
 }
 ```
 
-## エラーハンドリング
+## Error Handling
 
-- **DETECTION_FAILED**: パッケージマネージャーの判定失敗
-- **ALL_MANAGERS_FAILED**: 全パッケージマネージャーでの実行失敗
-- **MCP_SERVER_UNAVAILABLE**: MCPサーバーが利用不可
-- **TIMEOUT**: タイムアウト
-- **INVALID_PACKAGE_NAME**: 無効なパッケージ名
+- **DETECTION_FAILED**: Package manager detection failed
+- **ALL_MANAGERS_FAILED**: All package managers failed to execute
+- **MCP_SERVER_UNAVAILABLE**: MCP server unavailable
+- **TIMEOUT**: Request timeout
+- **INVALID_PACKAGE_NAME**: Invalid package name
 
-## パフォーマンス
+## Performance
 
-### キャッシュ機能
+### Caching Features
 
-- 判定結果キャッシュ（1時間）
-- ツール実行結果キャッシュ（30分）
-- 接続状態キャッシュ（5分）
+- Detection result cache (1 hour)
+- Tool execution result cache (30 minutes)
+- Connection status cache (5 minutes)
 
-### 並列実行
+### Parallel Execution
 
-- 高信頼度（0.8以上）: 単一マネージャー実行
-- 中信頼度（0.6-0.8）: 上位3マネージャー並列実行
-- 低信頼度（0.6未満）: 全マネージャー並列実行
+- High confidence (0.8+): Single manager execution
+- Medium confidence (0.6-0.8): Top 3 managers parallel execution
+- Low confidence (<0.6): All managers parallel execution
 
-## トラブルシューティング
+## Troubleshooting
 
-### よくある問題
+### Common Issues
 
-1. **MCPサーバーに接続できない**
-   - 各個別MCPサーバーがビルドされ、正しいパスに配置されていることを確認
-   - `config/mcp-servers.json` のパス設定を確認
+1. **Cannot connect to MCP server**
+   - Ensure each individual MCP server is built and located at the correct path
+   - Verify path settings in `config/mcp-servers.json`
 
-2. **特定のパッケージマネージャーが動作しない**
-   - 対応するMCPサーバーが正常に動作することを個別に確認
-   - ログを確認してエラーの詳細を調査
+2. **Specific package manager not working**
+   - Verify that the corresponding MCP server works individually
+   - Check logs for detailed error information
 
-3. **判定精度が低い**
-   - より多くのコンテキストヒントを提供
-   - `preferred_managers` パラメータを使用して優先順位を指定
+3. **Low detection accuracy**
+   - Provide more context hints
+   - Use the `preferred_managers` parameter to specify priorities
 
-## 開発
+## Development
 
-### テスト
+### Testing
 
 ```bash
 npm test
 ```
 
-### リント
+### Linting
 
 ```bash
 npm run lint
 ```
 
-### 開発モード
+### Development Mode
 
 ```bash
 npm run dev
 ```
 
-## 使用例
+## Usage Examples
 
-### Claude での使用例
-
-```
-ユーザー: "lodash について教えて"
-
-# Package README Core MCP Server が動作:
-1. "lodash" のパッケージ名解析
-2. npmパッケージの可能性が高いと判定（信頼度: 0.9）
-3. npm-mcp サーバーの get_package_readme tool を呼び出し
-4. 結果をユーザーに返却
-```
+### Claude Usage Examples
 
 ```
-ユーザー: "symfony/console のドキュメントが欲しい"
+User: "Tell me about lodash"
 
-# Package README Core MCP Server が動作:
-1. "symfony/console" のパッケージ名解析 
-2. vendor/package 形式からComposerと判定（信頼度: 0.95）
-3. composer-mcp サーバーの get_package_readme tool を呼び出し
-4. 結果をユーザーに返却
+# Package README Core MCP Server workflow:
+1. Analyze "lodash" package name
+2. Determine high probability of npm package (confidence: 0.9)
+3. Call npm-mcp server's get_package_readme tool
+4. Return results to user
 ```
 
-## ライセンス
+```
+User: "I need documentation for symfony/console"
+
+# Package README Core MCP Server workflow:
+1. Analyze "symfony/console" package name
+2. Determine Composer from vendor/package format (confidence: 0.95)
+3. Call composer-mcp server's get_package_readme tool
+4. Return results to user
+```
+
+## License
 
 MIT License
 
-## 貢献
+## Contributing
 
-プルリクエストやイシューの報告を歓迎します。
+Pull requests and issue reports are welcome.
 
-## サポート
+## Support
 
-質問や問題がある場合は、GitHubのIssuesを使用してください。
+For questions or issues, please use GitHub Issues.
