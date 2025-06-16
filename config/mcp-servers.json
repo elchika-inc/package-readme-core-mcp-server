@@ -1,0 +1,124 @@
+{
+  "servers": {
+    "npm": {
+      "server_id": "npm-package-mcp",
+      "command": "node",
+      "args": ["../npm-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "composer": {
+      "server_id": "composer-package-mcp",
+      "command": "node",
+      "args": ["../composer-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "pip": {
+      "server_id": "pip-package-mcp",
+      "command": "node",
+      "args": ["../pip-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "cargo": {
+      "server_id": "cargo-package-mcp",
+      "command": "node",
+      "args": ["../cargo-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "maven": {
+      "server_id": "maven-package-mcp",
+      "command": "node",
+      "args": ["../maven-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "nuget": {
+      "server_id": "nuget-package-mcp",
+      "command": "node",
+      "args": ["../nuget-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "gem": {
+      "server_id": "gem-package-mcp",
+      "command": "node",
+      "args": ["../gem-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "cocoapods": {
+      "server_id": "cocoapods-package-mcp",
+      "command": "node",
+      "args": ["../cocoapods-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "conan": {
+      "server_id": "conan-package-mcp",
+      "command": "node",
+      "args": ["../conan-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "cpan": {
+      "server_id": "cpan-package-mcp",
+      "command": "node",
+      "args": ["../cpan-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "cran": {
+      "server_id": "cran-package-mcp",
+      "command": "node",
+      "args": ["../cran-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "docker_hub": {
+      "server_id": "docker-hub-mcp",
+      "command": "node",
+      "args": ["../docker-hub-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "helm": {
+      "server_id": "helm-package-mcp",
+      "command": "node",
+      "args": ["../helm-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "swift": {
+      "server_id": "swift-package-mcp",
+      "command": "node",
+      "args": ["../swift-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    },
+    "vcpkg": {
+      "server_id": "vcpkg-package-mcp",
+      "command": "node",
+      "args": ["../vcpkg-package-readme-mcp-server/dist/index.js"],
+      "env": {},
+      "tools": ["get_package_readme", "get_package_info", "search_packages"],
+      "health_check_interval": 30000
+    }
+  }
+}

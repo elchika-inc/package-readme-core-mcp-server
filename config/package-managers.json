@@ -1,0 +1,156 @@
+{
+  "managers": {
+    "npm": {
+      "name": "npm",
+      "description": "Node.js package manager",
+      "file_patterns": ["package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml"],
+      "package_name_patterns": [
+        "^@[a-z0-9-~][a-z0-9-._~]*\\/[a-z0-9-~][a-z0-9-._~]*$",
+        "^[a-z0-9-~][a-z0-9-._~]*$"
+      ],
+      "context_keywords": ["node", "nodejs", "javascript", "typescript", "react", "vue", "angular", "express"],
+      "priority": 1
+    },
+    "composer": {
+      "name": "Composer",
+      "description": "PHP package manager",
+      "file_patterns": ["composer.json", "composer.lock"],
+      "package_name_patterns": [
+        "^[a-z0-9]([_.-]?[a-z0-9]+)*\\/[a-z0-9]([_.-]?[a-z0-9]+)*$"
+      ],
+      "context_keywords": ["php", "laravel", "symfony", "drupal", "wordpress"],
+      "priority": 2
+    },
+    "pip": {
+      "name": "pip",
+      "description": "Python package manager",
+      "file_patterns": ["requirements.txt", "setup.py", "pyproject.toml", "Pipfile"],
+      "package_name_patterns": [
+        "^[A-Z0-9]|[A-Z0-9][A-Z0-9._-]*[A-Z0-9]$"
+      ],
+      "context_keywords": ["python", "django", "flask", "fastapi", "pandas", "numpy"],
+      "priority": 3
+    },
+    "cargo": {
+      "name": "Cargo",
+      "description": "Rust package manager",
+      "file_patterns": ["Cargo.toml", "Cargo.lock"],
+      "package_name_patterns": [
+        "^[a-zA-Z][a-zA-Z0-9_-]*$"
+      ],
+      "context_keywords": ["rust", "rustlang", "tokio", "serde", "actix"],
+      "priority": 4
+    },
+    "maven": {
+      "name": "Maven",
+      "description": "Java package manager",
+      "file_patterns": ["pom.xml", "maven.config"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9._-]+:[a-zA-Z0-9._-]+$"
+      ],
+      "context_keywords": ["java", "maven", "spring", "hibernate", "junit"],
+      "priority": 5
+    },
+    "nuget": {
+      "name": "NuGet",
+      "description": ".NET package manager",
+      "file_patterns": ["*.csproj", "packages.config", "Directory.Build.props"],
+      "package_name_patterns": [
+        "^[A-Za-z0-9._-]+$"
+      ],
+      "context_keywords": ["dotnet", "csharp", "aspnet", "entity", "framework"],
+      "priority": 6
+    },
+    "gem": {
+      "name": "RubyGems",
+      "description": "Ruby package manager",
+      "file_patterns": ["Gemfile", "Gemfile.lock", "*.gemspec"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9._-]+$"
+      ],
+      "context_keywords": ["ruby", "rails", "sinatra", "rspec", "bundler"],
+      "priority": 7
+    },
+    "cocoapods": {
+      "name": "CocoaPods",
+      "description": "iOS/macOS dependency manager",
+      "file_patterns": ["Podfile", "Podfile.lock", "*.podspec"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9._-]+$"
+      ],
+      "context_keywords": ["ios", "macos", "swift", "objective-c", "xcode"],
+      "priority": 8
+    },
+    "conan": {
+      "name": "Conan",
+      "description": "C/C++ package manager",
+      "file_patterns": ["conanfile.txt", "conanfile.py", "conandata.yml"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9._-]+$"
+      ],
+      "context_keywords": ["cpp", "c++", "cmake", "gcc", "clang"],
+      "priority": 9
+    },
+    "cpan": {
+      "name": "CPAN",
+      "description": "Perl package manager",
+      "file_patterns": ["cpanfile", "Makefile.PL", "Build.PL"],
+      "package_name_patterns": [
+        "^[A-Za-z0-9:_-]+$"
+      ],
+      "context_keywords": ["perl", "cpan", "metacpan", "perl5"],
+      "priority": 10
+    },
+    "cran": {
+      "name": "CRAN",
+      "description": "R package manager",
+      "file_patterns": ["DESCRIPTION", "NAMESPACE", "*.R"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9.]+$"
+      ],
+      "context_keywords": ["r", "rstats", "ggplot", "dplyr", "shiny"],
+      "priority": 11
+    },
+    "docker_hub": {
+      "name": "Docker Hub",
+      "description": "Docker container registry",
+      "file_patterns": ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"],
+      "package_name_patterns": [
+        "^[a-z0-9]+(?:[._-][a-z0-9]+)*\\/[a-z0-9]+(?:[._-][a-z0-9]+)*$",
+        "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+      ],
+      "context_keywords": ["docker", "container", "dockerfile", "compose"],
+      "priority": 12
+    },
+    "helm": {
+      "name": "Helm",
+      "description": "Kubernetes package manager",
+      "file_patterns": ["Chart.yaml", "values.yaml", "requirements.yaml"],
+      "package_name_patterns": [
+        "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      ],
+      "context_keywords": ["helm", "kubernetes", "k8s", "chart"],
+      "priority": 13
+    },
+    "swift": {
+      "name": "Swift Package Manager",
+      "description": "Swift package manager",
+      "file_patterns": ["Package.swift", "Package.resolved"],
+      "package_name_patterns": [
+        "^[a-zA-Z0-9._-]+$"
+      ],
+      "context_keywords": ["swift", "swiftpm", "ios", "macos", "package"],
+      "priority": 14
+    },
+    "vcpkg": {
+      "name": "vcpkg",
+      "description": "C/C++ package manager by Microsoft",
+      "file_patterns": ["vcpkg.json", "portfile.cmake"],
+      "package_name_patterns": [
+        "^[a-z0-9-]+$"
+      ],
+      "context_keywords": ["vcpkg", "cpp", "c++", "visual", "studio"],
+      "priority": 15
+    }
+  }
+}
