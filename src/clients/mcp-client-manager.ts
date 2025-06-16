@@ -1,6 +1,6 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
-import { PackageManager, MCPServerConfig, OrchestrationError, OrchestrationErrorType } from '../types/index.js';
+import { PackageManager, MCPServerConfig } from '../types/index.js';
 
 export interface MCPClientManager {
   clients: Map<PackageManager, Client>;
@@ -98,7 +98,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
     const client = this.clients.get(manager);
     if (client) {
       try {
-        await client.close();
+        await (client as any).close();
       } catch (error) {
         console.error(`Error disconnecting from ${manager}:`, error);
       }

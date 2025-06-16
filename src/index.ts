@@ -52,7 +52,7 @@ async function main(): Promise<void> {
     const transport = new StdioServerTransport();
 
     // Connect server to transport
-    await server.getServer().connect(transport);
+    await (server.getServer() as any).connect(transport);
 
     logger.info('Package README Core MCP Server is running');
 

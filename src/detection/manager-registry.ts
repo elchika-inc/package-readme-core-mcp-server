@@ -1,6 +1,10 @@
 import { PackageManager, PackageManagerInfo, MCPServerConfig } from '../types/index.js';
 import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export class ManagerRegistry {
   private managers: Map<PackageManager, PackageManagerInfo> = new Map();
@@ -14,7 +18,7 @@ export class ManagerRegistry {
 
   private async loadPackageManagers(): Promise<void> {
     try {
-      const configPath = join(process.cwd(), 'config', 'package-managers.json');
+      const configPath = join(__dirname, '../../config', 'package-managers.json');
       const configData = await readFile(configPath, 'utf-8');
       const config = JSON.parse(configData);
 
@@ -43,7 +47,7 @@ export class ManagerRegistry {
 
   private async loadMCPServers(): Promise<void> {
     try {
-      const configPath = join(process.cwd(), 'config', 'mcp-servers.json');
+      const configPath = join(__dirname, '../../config', 'mcp-servers.json');
       const configData = await readFile(configPath, 'utf-8');
       const config = JSON.parse(configData);
 

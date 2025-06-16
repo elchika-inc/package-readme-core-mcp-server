@@ -17,7 +17,7 @@ export class Logger {
   private level: LogLevel;
   private source: string;
 
-  constructor(source: string = 'Package-README-Core-MCP', level: LogLevel = LogLevel.INFO) {
+  constructor(source: string = 'Package-README-Core-MCP', level: LogLevel = LogLevel.WARN) {
     this.source = source;
     this.level = this.parseLogLevel(process.env.LOG_LEVEL) || level;
   }

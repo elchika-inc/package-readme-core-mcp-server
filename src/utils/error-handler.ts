@@ -24,6 +24,9 @@ export class ErrorHandler {
     logger.error('Package manager detection failed', {
       package_name: packageName,
       context_hints: contextHints,
+      context_hints_count: contextHints?.length || 0,
+      error_type: originalError?.constructor?.name,
+      error_message: originalError?.message,
       original_error: originalError
     });
 
@@ -39,7 +42,13 @@ export class ErrorHandler {
     manager: PackageManager,
     originalError?: any
   ): OrchestrationError {
-    logger.error(`MCP server connection failed: ${manager}`, originalError);
+    logger.error(`MCP server connection failed: ${manager}`, {
+      manager,
+      error_type: originalError?.constructor?.name,
+      error_message: originalError?.message,
+      error_code: originalError?.code,
+      original_error: originalError
+    });
 
     return this.createError(
       OrchestrationErrorType.MCP_SERVER_UNAVAILABLE,

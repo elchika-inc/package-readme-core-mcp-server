@@ -1,6 +1,8 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { 
   CallToolRequestSchema,
+  ListPromptsRequestSchema,
+  ListResourcesRequestSchema,
   ListToolsRequestSchema,
   ErrorCode,
   McpError
@@ -57,7 +59,9 @@ export class ToolOrchestrationMCPServer {
       },
       {
         capabilities: {
-          tools: {}
+          tools: {},
+          prompts: {},
+          resources: {}
         }
       }
     );
@@ -107,7 +111,7 @@ export class ToolOrchestrationMCPServer {
 
   private setupHandlers(): void {
     // List tools handler
-    this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+    (this.server as any).setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [
           {
@@ -208,11 +212,21 @@ export class ToolOrchestrationMCPServer {
             }
           }
         ]
-      };
+      }
+    });
+
+    // Handle prompts list
+    (this.server as any).setRequestHandler(ListPromptsRequestSchema, async () => {
+      return { prompts: [] };
+    });
+
+    // Handle resources list
+    (this.server as any).setRequestHandler(ListResourcesRequestSchema, async () => {
+      return { resources: [] };
     });
 
     // Call tool handler
-    this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    (this.server as any).setRequestHandler(CallToolRequestSchema, async (request: any, _extra: any) => {
       const { name, arguments: args } = request.params;
 
       try {
@@ -260,7 +274,7 @@ export class ToolOrchestrationMCPServer {
               text: JSON.stringify(result, null, 2)
             }
           ]
-        };
+        }
 
       } catch (error) {
         logger.error(`Tool execution failed: ${name}`, { error: String(error), args });
@@ -283,14 +297,14 @@ export class ToolOrchestrationMCPServer {
           error_type: OrchestrationErrorType.VALIDATION_ERROR,
           message: 'Input validation failed',
           details: { validation_errors: validation.errors }
-        }],
+        },],
         metadata: {
           execution_time: 0,
           managers_attempted: [],
           managers_succeeded: [],
           detection_confidence: 0
         }
-      };
+      }
     }
 
     return await this.smartPackageSearchTool.execute(validation.validatedParams!);
@@ -306,14 +320,14 @@ export class ToolOrchestrationMCPServer {
           error_type: OrchestrationErrorType.VALIDATION_ERROR,
           message: 'Input validation failed',
           details: { validation_errors: validation.errors }
-        }],
+        },],
         metadata: {
           execution_time: 0,
           managers_attempted: [],
           managers_succeeded: [],
           detection_confidence: 0
         }
-      };
+      }
     }
 
     return await this.smartPackageReadmeTool.execute(validation.validatedParams!);
@@ -329,14 +343,14 @@ export class ToolOrchestrationMCPServer {
           error_type: OrchestrationErrorType.VALIDATION_ERROR,
           message: 'Input validation failed',
           details: { validation_errors: validation.errors }
-        }],
+        },],
         metadata: {
           execution_time: 0,
           managers_attempted: [],
           managers_succeeded: [],
           detection_confidence: 0
         }
-      };
+      }
     }
 
     return await this.smartPackageInfoTool.execute(validation.validatedParams!);
@@ -423,8 +437,8 @@ export class ToolOrchestrationMCPServer {
       // Disconnect from all MCP servers
       await this.clientManager.disconnectAll();
 
-      // Clear caches
-      cacheManager.clearAllCaches();
+      // Shutdown cache manager (stops periodic cleanup and clears caches)
+      cacheManager.shutdown();
 
       logger.info('Package README Core MCP Server cleanup completed');
 
@@ -472,7 +486,7 @@ export class ToolOrchestrationMCPServer {
           cache_stats: cacheStats,
           uptime: Date.now() - startTime
         }
-      };
+      }
 
     } catch (error) {
       logger.error('Health check failed', error);
@@ -484,7 +498,7 @@ export class ToolOrchestrationMCPServer {
           cache_stats: null,
           uptime: 0
         }
-      };
+      }
     }
   }
 }

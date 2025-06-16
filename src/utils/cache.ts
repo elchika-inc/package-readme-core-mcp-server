@@ -313,9 +313,11 @@ export class CacheManager {
     logger.info('Cache statistics', stats);
   }
 
+  private cleanupInterval?: NodeJS.Timeout;
+
   // Periodic cleanup
   startPeriodicCleanup(intervalMs: number = 300000): NodeJS.Timeout { // 5 minutes
-    return setInterval(() => {
+    this.cleanupInterval = setInterval(() => {
       this.logCacheStats();
       // Force cleanup on all caches by triggering internal cleanup
       for (const cache of this.caches) {
@@ -323,6 +325,21 @@ export class CacheManager {
         cache.has('dummy_cleanup_key');
       }
     }, intervalMs);
+    return this.cleanupInterval;
+  }
+
+  stopPeriodicCleanup(): void {
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval);
+      this.cleanupInterval = undefined;
+    }
+  }
+
+  // Graceful shutdown - clear all caches and stop cleanup
+  shutdown(): void {
+    this.stopPeriodicCleanup();
+    this.clearAllCaches();
+    logger.info('Cache manager shutdown completed');
   }
 }
 
