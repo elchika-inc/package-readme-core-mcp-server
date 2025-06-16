@@ -15,7 +15,7 @@ To run this server, you need **the following individual package manager-specific
 The following MCP servers must be set up and built beforehand:
 
 - **npm-package-readme-mcp-server** - Node.js/npm package support
-- **composer-package-readme-mcp-server** - PHP/Composer package support  
+- **composer-package-readme-mcp-server** - PHP/Composer package support
 - **pip-package-readme-mcp-server** - Python/pip package support
 - **cargo-package-readme-mcp-server** - Rust/Cargo package support
 - **maven-package-readme-mcp-server** - Java/Maven package support
@@ -33,17 +33,18 @@ The following MCP servers must be set up and built beforehand:
 ### Setup Instructions
 
 1. **Build each MCP server**
+
    ```bash
    # Example: npm MCP server
    cd ../npm-package-readme-mcp-server
    npm install
    npm run build
-   
+
    # Repeat for other package managers
    ```
 
 2. **Verify configuration files**
-   
+
    Ensure that the paths for each MCP server are correctly set in `config/mcp-servers.json`.
 
 ## Overview
@@ -289,10 +290,12 @@ weights: {
 ### Common Issues
 
 1. **Cannot connect to MCP server**
+
    - Ensure each individual MCP server is built and located at the correct path
    - Verify path settings in `config/mcp-servers.json`
 
 2. **Specific package manager not working**
+
    - Verify that the corresponding MCP server works individually
    - Check logs for detailed error information
 
