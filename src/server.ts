@@ -311,26 +311,7 @@ export class ToolOrchestrationMCPServer {
   }
 
   private async handleSmartPackageReadme(args: SmartPackageReadmeParams): Promise<any> {
-    // Validate input
-    const validation = Validators.validateSmartPackageReadmeParams(args);
-    if (!validation.valid) {
-      return {
-        success: false,
-        errors: [{
-          error_type: OrchestrationErrorType.VALIDATION_ERROR,
-          message: 'Input validation failed',
-          details: { validation_errors: validation.errors }
-        },],
-        metadata: {
-          execution_time: 0,
-          managers_attempted: [],
-          managers_succeeded: [],
-          detection_confidence: 0
-        }
-      }
-    }
-
-    return await this.smartPackageReadmeTool.execute(validation.validatedParams!);
+    return await this.smartPackageReadmeTool.execute(args);
   }
 
   private async handleSmartPackageInfo(args: SmartPackageInfoParams): Promise<any> {
