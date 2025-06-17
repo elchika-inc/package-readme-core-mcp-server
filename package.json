@@ -1,6 +1,6 @@
 {
   "name": "package-readme-core-mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Package README Core MCP Server - Automatically detects package managers and routes requests to appropriate MCP servers",
   "main": "dist/index.js",
   "type": "module",
