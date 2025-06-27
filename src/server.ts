@@ -110,7 +110,13 @@ export class ToolOrchestrationMCPServer {
   }
 
   private setupHandlers(): void {
-    // List tools handler
+    this.setupListToolsHandler();
+    this.setupPromptsHandler();
+    this.setupResourcesHandler();
+    this.setupCallToolHandler();
+  }
+
+  private setupListToolsHandler(): void {
     (this.server as any).setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [
@@ -214,18 +220,21 @@ export class ToolOrchestrationMCPServer {
         ]
       }
     });
+  }
 
-    // Handle prompts list
+  private setupPromptsHandler(): void {
     (this.server as any).setRequestHandler(ListPromptsRequestSchema, async () => {
       return { prompts: [] };
     });
+  }
 
-    // Handle resources list
+  private setupResourcesHandler(): void {
     (this.server as any).setRequestHandler(ListResourcesRequestSchema, async () => {
       return { resources: [] };
     });
+  }
 
-    // Call tool handler
+  private setupCallToolHandler(): void {
     (this.server as any).setRequestHandler(CallToolRequestSchema, async (request: any, _extra: any) => {
       const { name, arguments: args } = request.params;
 

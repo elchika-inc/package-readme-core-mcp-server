@@ -231,6 +231,48 @@ export class Validators {
     return { valid: true, errors: [], validated: value };
   }
 
+  // Helper method for processing multiple validations
+  private static processValidations(
+    validations: Array<{ field: string; validator: () => any; required: boolean }>,
+    params: any,
+    context: string
+  ): any {
+    const allErrors: string[] = [];
+    const validatedParams: any = {};
+
+    for (const { field, validator, required } of validations) {
+      const validation = validator();
+      
+      if (!validation.valid) {
+        if (required || params[field] !== undefined) {
+          allErrors.push(...validation.errors);
+        }
+      } else {
+        const value = validation.validated !== undefined ? validation.validated : validation.sanitized;
+        if (value !== undefined) {
+          validatedParams[field] = value;
+        } else if (required) {
+          validatedParams[field] = params[field];
+        }
+      }
+    }
+
+    const isValid = allErrors.length === 0;
+    
+    if (!isValid) {
+      logger.warn(`${context} validation failed`, {
+        errors: allErrors,
+        original_params: params
+      });
+    }
+
+    return {
+      valid: isValid,
+      errors: allErrors,
+      validatedParams: isValid ? validatedParams : undefined
+    };
+  }
+
   // Comprehensive validation for smart package search params
   static validateSmartPackageSearchParams(params: any): {
     valid: boolean;
@@ -242,55 +284,14 @@ export class Validators {
       limit?: number;
     };
   } {
-    const allErrors: string[] = [];
-    const validatedParams: any = {};
+    const validations = [
+      { field: 'package_name', validator: () => this.validatePackageName(params.package_name), required: true },
+      { field: 'context_hints', validator: () => this.validateContextHints(params.context_hints), required: false },
+      { field: 'preferred_managers', validator: () => this.validatePreferredManagers(params.preferred_managers), required: false },
+      { field: 'limit', validator: () => this.validateLimit(params.limit), required: false }
+    ];
 
-    // Validate package name (required)
-    const packageNameValidation = this.validatePackageName(params.package_name);
-    if (!packageNameValidation.valid) {
-      allErrors.push(...packageNameValidation.errors);
-    } else {
-      validatedParams.package_name = params.package_name;
-    }
-
-    // Validate context hints (optional)
-    const contextHintsValidation = this.validateContextHints(params.context_hints);
-    if (!contextHintsValidation.valid) {
-      allErrors.push(...contextHintsValidation.errors);
-    } else if (contextHintsValidation.sanitized) {
-      validatedParams.context_hints = contextHintsValidation.sanitized;
-    }
-
-    // Validate preferred managers (optional)
-    const preferredManagersValidation = this.validatePreferredManagers(params.preferred_managers);
-    if (!preferredManagersValidation.valid) {
-      allErrors.push(...preferredManagersValidation.errors);
-    } else if (preferredManagersValidation.validated) {
-      validatedParams.preferred_managers = preferredManagersValidation.validated;
-    }
-
-    // Validate limit (optional)
-    const limitValidation = this.validateLimit(params.limit);
-    if (!limitValidation.valid) {
-      allErrors.push(...limitValidation.errors);
-    } else if (limitValidation.validated !== undefined) {
-      validatedParams.limit = limitValidation.validated;
-    }
-
-    const isValid = allErrors.length === 0;
-    
-    if (!isValid) {
-      logger.warn('Smart package search params validation failed', {
-        errors: allErrors,
-        original_params: params
-      });
-    }
-
-    return {
-      valid: isValid,
-      errors: allErrors,
-      validatedParams: isValid ? validatedParams : undefined
-    };
+    return this.processValidations(validations, params, 'Smart package search params');
   }
 
   // Comprehensive validation for smart package readme params
@@ -305,63 +306,15 @@ export class Validators {
       include_examples?: boolean;
     };
   } {
-    const allErrors: string[] = [];
-    const validatedParams: any = {};
+    const validations = [
+      { field: 'package_name', validator: () => this.validatePackageName(params.package_name), required: true },
+      { field: 'version', validator: () => this.validateVersion(params.version), required: false },
+      { field: 'context_hints', validator: () => this.validateContextHints(params.context_hints), required: false },
+      { field: 'preferred_managers', validator: () => this.validatePreferredManagers(params.preferred_managers), required: false },
+      { field: 'include_examples', validator: () => this.validateBoolean(params.include_examples, 'include_examples'), required: false }
+    ];
 
-    // Validate package name (required)
-    const packageNameValidation = this.validatePackageName(params.package_name);
-    if (!packageNameValidation.valid) {
-      allErrors.push(...packageNameValidation.errors);
-    } else {
-      validatedParams.package_name = params.package_name;
-    }
-
-    // Validate version (optional)
-    const versionValidation = this.validateVersion(params.version);
-    if (!versionValidation.valid) {
-      allErrors.push(...versionValidation.errors);
-    } else if (versionValidation.validated !== undefined) {
-      validatedParams.version = versionValidation.validated;
-    }
-
-    // Validate context hints (optional)
-    const contextHintsValidation = this.validateContextHints(params.context_hints);
-    if (!contextHintsValidation.valid) {
-      allErrors.push(...contextHintsValidation.errors);
-    } else if (contextHintsValidation.sanitized) {
-      validatedParams.context_hints = contextHintsValidation.sanitized;
-    }
-
-    // Validate preferred managers (optional)
-    const preferredManagersValidation = this.validatePreferredManagers(params.preferred_managers);
-    if (!preferredManagersValidation.valid) {
-      allErrors.push(...preferredManagersValidation.errors);
-    } else if (preferredManagersValidation.validated) {
-      validatedParams.preferred_managers = preferredManagersValidation.validated;
-    }
-
-    // Validate include_examples (optional)
-    const includeExamplesValidation = this.validateBoolean(params.include_examples, 'include_examples');
-    if (!includeExamplesValidation.valid) {
-      allErrors.push(...includeExamplesValidation.errors);
-    } else if (includeExamplesValidation.validated !== undefined) {
-      validatedParams.include_examples = includeExamplesValidation.validated;
-    }
-
-    const isValid = allErrors.length === 0;
-    
-    if (!isValid) {
-      logger.warn('Smart package readme params validation failed', {
-        errors: allErrors,
-        original_params: params
-      });
-    }
-
-    return {
-      valid: isValid,
-      errors: allErrors,
-      validatedParams: isValid ? validatedParams : undefined
-    };
+    return this.processValidations(validations, params, 'Smart package readme params');
   }
 
   // Comprehensive validation for smart package info params
@@ -375,54 +328,13 @@ export class Validators {
       include_dependencies?: boolean;
     };
   } {
-    const allErrors: string[] = [];
-    const validatedParams: any = {};
+    const validations = [
+      { field: 'package_name', validator: () => this.validatePackageName(params.package_name), required: true },
+      { field: 'context_hints', validator: () => this.validateContextHints(params.context_hints), required: false },
+      { field: 'preferred_managers', validator: () => this.validatePreferredManagers(params.preferred_managers), required: false },
+      { field: 'include_dependencies', validator: () => this.validateBoolean(params.include_dependencies, 'include_dependencies'), required: false }
+    ];
 
-    // Validate package name (required)
-    const packageNameValidation = this.validatePackageName(params.package_name);
-    if (!packageNameValidation.valid) {
-      allErrors.push(...packageNameValidation.errors);
-    } else {
-      validatedParams.package_name = params.package_name;
-    }
-
-    // Validate context hints (optional)
-    const contextHintsValidation = this.validateContextHints(params.context_hints);
-    if (!contextHintsValidation.valid) {
-      allErrors.push(...contextHintsValidation.errors);
-    } else if (contextHintsValidation.sanitized) {
-      validatedParams.context_hints = contextHintsValidation.sanitized;
-    }
-
-    // Validate preferred managers (optional)
-    const preferredManagersValidation = this.validatePreferredManagers(params.preferred_managers);
-    if (!preferredManagersValidation.valid) {
-      allErrors.push(...preferredManagersValidation.errors);
-    } else if (preferredManagersValidation.validated) {
-      validatedParams.preferred_managers = preferredManagersValidation.validated;
-    }
-
-    // Validate include_dependencies (optional)
-    const includeDependenciesValidation = this.validateBoolean(params.include_dependencies, 'include_dependencies');
-    if (!includeDependenciesValidation.valid) {
-      allErrors.push(...includeDependenciesValidation.errors);
-    } else if (includeDependenciesValidation.validated !== undefined) {
-      validatedParams.include_dependencies = includeDependenciesValidation.validated;
-    }
-
-    const isValid = allErrors.length === 0;
-    
-    if (!isValid) {
-      logger.warn('Smart package info params validation failed', {
-        errors: allErrors,
-        original_params: params
-      });
-    }
-
-    return {
-      valid: isValid,
-      errors: allErrors,
-      validatedParams: isValid ? validatedParams : undefined
-    };
+    return this.processValidations(validations, params, 'Smart package info params');
   }
 }

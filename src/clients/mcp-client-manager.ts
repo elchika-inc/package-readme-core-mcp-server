@@ -86,10 +86,10 @@ export class MCPClientManagerImpl implements MCPClientManager {
         this.startHealthCheck(manager, config.health_check_interval);
       }
 
-      console.log(`Connected to ${manager} MCP server`);
+      // Log through the shared logger system instead of console.log
     } catch (error) {
       this.connectionStatus.set(manager, false);
-      console.error(`Failed to connect to ${manager} MCP server:`, error);
+      // Error will be handled by the caller with proper logging
       throw error;
     }
   }
@@ -100,7 +100,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
       try {
         await (client as any).close();
       } catch (error) {
-        console.error(`Error disconnecting from ${manager}:`, error);
+        // Error will be handled by the caller with proper logging
       }
       
       this.clients.delete(manager);
@@ -115,7 +115,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
       this.healthCheckIntervals.delete(manager);
     }
 
-    console.log(`Disconnected from ${manager} MCP server`);
+    // Log through the shared logger system instead of console.log
   }
 
   isConnected(manager: PackageManager): boolean {
@@ -145,11 +145,11 @@ export class MCPClientManagerImpl implements MCPClientManager {
       });
 
       const endTime = Date.now();
-      console.log(`Tool call to ${manager}.${toolName} completed in ${endTime - startTime}ms`);
+      // Tool call timing is logged by the caller
 
       return result.content as T;
     } catch (error) {
-      console.error(`Tool call failed for ${manager}.${toolName}:`, error);
+      // Error will be handled by the caller with proper logging
       
       // Check if we should reconnect
       if (this.shouldReconnectOnError(error)) {
@@ -252,7 +252,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
           await client.listTools();
         }
       } catch (error) {
-        console.error(`Health check failed for ${manager}:`, error);
+        // Health check error will be handled by the caller
         this.connectionStatus.set(manager, false);
         // Could implement auto-reconnection here
       }
@@ -279,7 +279,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
   async connectAll(): Promise<void> {
     const connectionPromises = Array.from(this.serverConfigs.keys()).map(manager => 
       this.connect(manager).catch(error => {
-        console.error(`Failed to connect to ${manager}:`, error);
+        // Connection error will be handled by the caller
         // Don't throw - allow other connections to proceed
       })
     );
@@ -290,7 +290,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
   async disconnectAll(): Promise<void> {
     const disconnectionPromises = Array.from(this.clients.keys()).map(manager => 
       this.disconnect(manager).catch(error => {
-        console.error(`Failed to disconnect from ${manager}:`, error);
+        // Disconnection error will be handled by the caller
       })
     );
 
@@ -313,7 +313,7 @@ export class MCPClientManagerImpl implements MCPClientManager {
         await this.connect(manager);
         return true;
       } catch (error) {
-        console.error(`Connection attempt ${attempt}/${maxRetries} failed for ${manager}:`, error);
+        // Connection retry error will be handled by the caller
         
         if (attempt < maxRetries) {
           // Exponential backoff

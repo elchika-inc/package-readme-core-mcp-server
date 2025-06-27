@@ -1,11 +1,11 @@
 {
   "name": "@elchika-inc/package-readme-core-mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Package README Core MCP Server - Automatically detects package managers and routes requests to appropriate MCP servers",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "package-readme-core-mcp-server": "dist/src/index.js"
+    "package-readme-core-mcp-server": "dist/index.js"
   },
   "files": [
     "dist",
@@ -19,7 +19,7 @@
     "clean": "rm -rf dist",
     "test": "bun vitest",
     "npm:publish": "npm publish --access public",
-    "prepublishOnly": "bun run clean && bun run build"
+    "prepublishOnly": "bun run clean && bun run build && chmod +x dist/index.js"
   },
   "keywords": [
     "mcp",
@@ -49,16 +49,17 @@
     "url": "https://github.com/elchika-inc/package-readme-mcp-servers/issues"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.6.1"
+    "@modelcontextprotocol/sdk": "^1.13.2",
+    "@elchika-inc/package-readme-shared": "file:../shared"
   },
   "devDependencies": {
-    "@types/bun": "^1.0.0",
-    "@types/node": "^22.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.0.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.5.0",
+    "@types/bun": "^1.2.17",
+    "@types/node": "^24.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "eslint": "^9.29.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   },
   "engines": {

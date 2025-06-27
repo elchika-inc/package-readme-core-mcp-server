@@ -2,6 +2,7 @@ import { PackageManager, PackageManagerInfo, MCPServerConfig } from '../types/in
 import { readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { logger } from '../utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -39,7 +40,7 @@ export class ManagerRegistry {
         this.managers.set(manager, info);
       }
     } catch (error) {
-      console.error('Failed to load package managers config:', error);
+      logger.error('Failed to load package managers config', error);
       // Load defaults if config file is missing
       this.loadDefaultManagers();
     }
@@ -67,7 +68,7 @@ export class ManagerRegistry {
         this.mcpServers.set(manager, mcpConfig);
       }
     } catch (error) {
-      console.error('Failed to load MCP servers config:', error);
+      logger.error('Failed to load MCP servers config', error);
     }
   }
 
