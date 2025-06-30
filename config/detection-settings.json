@@ -1,0 +1,39 @@
+{
+  "confidence_thresholds": {
+    "minimum_confidence": 0.3,
+    "high_confidence": 0.8,
+    "parallel_execution_threshold": 0.7
+  },
+  "validation_rules": {
+    "min_package_name_length": 1,
+    "max_package_name_length": 214,
+    "allowed_package_name_chars": "^[a-zA-Z0-9@/._-]+$",
+    "min_search_limit": 1,
+    "max_search_limit": 100,
+    "default_search_limit": 10,
+    "max_context_hints": 20,
+    "max_hint_length": 100,
+    "max_version_length": 50
+  },
+  "execution_settings": {
+    "max_managers_attempted": 5,
+    "timeout_ms": 30000,
+    "retry_attempts": 2
+  },
+  "file_patterns": {
+    "package_json": ["package.json", "package-lock.json", "yarn.lock"],
+    "composer_json": ["composer.json", "composer.lock"],
+    "requirements_txt": ["requirements.txt", "Pipfile", "pyproject.toml"],
+    "cargo_toml": ["Cargo.toml", "Cargo.lock"],
+    "pom_xml": ["pom.xml", "build.gradle", "build.gradle.kts"],
+    "gemfile": ["Gemfile", "Gemfile.lock"],
+    "podfile": ["Podfile", "Podfile.lock"],
+    "dockerfile": ["Dockerfile", "docker-compose.yml"],
+    "conanfile": ["conanfile.txt", "conanfile.py"],
+    "cran": ["DESCRIPTION", "NAMESPACE"],
+    "nuget": ["*.csproj", "*.fsproj", "*.vbproj", "packages.config"],
+    "vcpkg": ["vcpkg.json", "CONTROL"],
+    "swift": ["Package.swift"],
+    "helm": ["Chart.yaml", "values.yaml"]
+  }
+}

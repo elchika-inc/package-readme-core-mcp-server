@@ -1,5 +1,6 @@
 import { PackageManager, DetectedManager, DetectionReason } from '../types/index.js';
 import { CONFIDENCE_CALCULATION } from '../config/patterns.js';
+import { settingsLoader } from '../config/settings-loader.js';
 
 export class ConfidenceCalculator {
   calculateOverallConfidence(
@@ -20,8 +21,9 @@ export class ConfidenceCalculator {
     }));
 
     // Sort by confidence and return
+    const settings = settingsLoader.getSettings();
     return finalDetections
-      .filter(d => d.confidence >= CONFIDENCE_CALCULATION.thresholds.low_confidence)
+      .filter(d => d.confidence >= settings.confidence_thresholds.minimum_confidence)
       .sort((a, b) => b.confidence - a.confidence);
   }
 
